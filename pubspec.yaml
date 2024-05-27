@@ -64,6 +64,18 @@ flutter:
     - images/question-mark.png
     - images/stop.png
     - images/idea.png
+    - images/beef.jpg
+    - images/chicken.jpg
+    - images/crock_pot.jpg
+    - images/main_dishes.jpg
+    - images/pork.jpg
+    - images/salad.jpg
+    - images/seafood.jpg
+    - images/side_dishes.jpg
+    - images/ice_cream.jpg
+    - images/cookies.jpg
+    - images/pies.jpg
+    - images/brownies.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

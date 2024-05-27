@@ -1,4 +1,4 @@
-#Tue May 21 19:52:38 EDT 2024
-base.0=/Users/wangyanan/StudioProjects/myapp_lab/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+#Mon May 27 00:34:17 EDT 2024
+base.0=/Users/wangyanan/StudioProjects/flutter_dev_lab/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

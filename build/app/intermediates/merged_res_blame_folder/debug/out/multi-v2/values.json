@@ -42,7 +42,7 @@
                     }
                 },
                 {
-                    "source": "/Users/wangyanan/StudioProjects/myapp_lab/android/app/src/main/res/values/styles.xml",
+                    "source": "/Users/wangyanan/StudioProjects/flutter_dev_lab/android/app/src/main/res/values/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
