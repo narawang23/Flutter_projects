@@ -236,104 +236,124 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Column(
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/main_dishes.jpg'),
-                            fit: BoxFit.cover,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/main_dishes.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          Text(
+                            'MAIN DISHES',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
-                      // Add space between the image and the text
-                      Text(
-                        'MAIN DISHES',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/salad.jpg'),
-                            fit: BoxFit.cover,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/salad.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          Text(
+                            'SALAD',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
-                      // Add space between the image and the text
-                      Text(
-                        'SALAD',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/side_dishes.jpg'),
-                            fit: BoxFit.cover,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/side_dishes.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          Text(
+                            'SIDE DISHES',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
-                      // Add space between the image and the text
-                      Text(
-                        'SIDE DISHES',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/crock_pot.jpg'),
-                            fit: BoxFit.cover,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/crock_pot.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          Text(
+                            'CROCK POT',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
-                      // Add space between the image and the text
-                      Text(
-                        'CROCK POT',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                 ],
               ),
             ],
           ),
+
           Column(
             children: [
               Row(
@@ -356,104 +376,137 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Column(
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/ice_cream.jpg'),
-                            fit: BoxFit.cover,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/ice_cream.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          Container(
+                            color: Colors.black54,
+                            width: 150,
+                            child: Text(
+                              'Ice Cream',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
-                      // Add space between the image and the text
-                      Text(
-                        'Ice Cream',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/brownies.jpg'),
-                            fit: BoxFit.cover,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/brownies.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          Container(
+                            color: Colors.black54,
+                            width: 150,
+                            child: Text(
+                              'Brownies',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
-                      // Add space between the image and the text
-                      Text(
-                        'Brownies',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/pies.jpg'),
-                            fit: BoxFit.cover,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/pies.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          Container(
+                            color: Colors.black54,
+                            width: 150,
+                            child: Text(
+                              'Pies',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
-                      // Add space between the image and the text
-                      Text(
-                        'Pies',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      Container(
-                        width: 150,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/cookies.jpg'),
-                            fit: BoxFit.cover,
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('images/cookies.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
+                          Container(
+                            color: Colors.black54,
+                            width: 150,
+                            child: Text(
+                              'Cookies',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8),
-                      // Add space between the image and the text
-                      Text(
-                        'Cookies',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                 ],
               ),
               SizedBox(height: 20),
-              // Add space at the bottom of the webpage
+
+          // Add space at the bottom of the webpage
             ],
           )
         ],
