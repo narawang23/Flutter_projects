@@ -76,16 +76,19 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child:
-              Text(
-                "Not sure about exactly which recipe you're looking for? Do a search, or dive into our most popular categories.",
-                style: TextStyle(fontSize: 18),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Not sure about exactly which recipe you're looking for? Do a search, or dive into our most popular categories.",
+                    style: TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center, // This aligns the text to the center
+                  ),
+                ),
               ),
-              // ),
             ],
           ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
