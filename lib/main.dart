@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'secondPage.dart'; // Import the new page
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String imageSource = "images/question-mark.png";
   bool _credentialsLoaded = false;
 
   Future<void> _saveCredentials() async {
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<void> _showSaveDialog() async {
+  Future<void> _showSaveDialog(bool isLoginSuccess) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -73,6 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 _saveCredentials();
                 Navigator.of(context).pop();
+                if (isLoginSuccess) {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => secondPage())); // Navigate to UserDetailsPage
+                }
               },
             ),
             TextButton(
@@ -80,6 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 _clearCredentials();
                 Navigator.of(context).pop();
+                if (isLoginSuccess) {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => secondPage())); // Navigate to the new page
+                }
               },
             ),
           ],
@@ -89,14 +95,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _login() {
-    setState(() {
-      if (_passwordController.text == "QWERTY123") {
-        imageSource = "images/idea.png";
-      } else {
-        imageSource = "images/stop.png";
-      }
-    });
-    _showSaveDialog();
+    bool isLoginSuccess = _passwordController.text == "QWERTY123";
+    if (isLoginSuccess) {
+      _showSaveDialog(true);
+    } else {
+      _showSaveDialog(false);
+    }
   }
 
   @override
@@ -113,7 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
     if (username != null && password != null) {
       _usernameController.text = username;
       _passwordController.text = password;
-      _credentialsLoaded = true;
+      setState(() {
+        _credentialsLoaded = true;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Previous credentials loaded.'),
@@ -168,11 +174,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-            ),
-            Image.asset(
-              imageSource,
-              width: 300,
-              height: 300,
             ),
           ],
         ),
