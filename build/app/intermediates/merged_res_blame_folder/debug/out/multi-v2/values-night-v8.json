@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.cst2335_summer24.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
+            "outputFile": "com.example.cst2335_summer24.app-mergeDebugResources-11:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
                     "source": "/Users/wangyanan/StudioProjects/flutter_dev_lab/android/app/src/main/res/values-night/styles.xml",

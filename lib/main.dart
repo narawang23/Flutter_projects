@@ -1,9 +1,7 @@
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'home_page.dart';
-import 'second_page.dart'; // Import the new page
-import 'package:url_launcher/url_launcher.dart';
 
+import 'secondPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,129 +10,163 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // list all pages
+      routes:{
+        //keys:     //values
+        '/pageOne'  :  (context) => MyHomePage(title: "Flutter Demo Home Page"),
+        '/pageTwo'  :  (context) {
+          return SecondPage();
+        }
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/pageOne',
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+class DataRepository{
+  static String loginName="";
+  static String password="";
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _credentialsLoaded = false;
+class _MyHomePageState extends State<MyHomePage> {
+  double _counter = 0.0;
+  var myFontSize = 25.0;
+  // var isChecked = false;
 
-  Future<void> _saveCredentials() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('username', _usernameController.text);
-    await prefs.setString('password', _passwordController.text);
-  }
-
-  Future<void> _clearCredentials() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('username');
-    await prefs.remove('password');
-    _usernameController.clear();
-    _passwordController.clear();
-    setState(() {
-      _credentialsLoaded = false;
-    });
-  }
-
-  Future<void> _showSaveDialog(bool isLoginSuccess) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Save Credentials?'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Would you like to save your username and password for next time?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Yes'),
-              onPressed: () {
-                _saveCredentials();
-                Navigator.of(context).pop();
-                if (isLoginSuccess) {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => secondPage())); // Navigate to UserDetailsPage
-                }
-              },
-            ),
-            TextButton(
-              child: const Text('No'),
-              onPressed: () {
-                _clearCredentials();
-                Navigator.of(context).pop();
-                if (isLoginSuccess) {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => secondPage())); // Navigate to the new page
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _login() {
-    bool isLoginSuccess = _passwordController.text == "QWERTY123";
-    if (isLoginSuccess) {
-      _showSaveDialog(true);
-    } else {
-      _showSaveDialog(false);
-    }
-  }
+  late TextEditingController _loginController;
+  late TextEditingController _passwordController;
+  late EncryptedSharedPreferences savedData;
 
   @override
   void initState() {
     super.initState();
-    _loadCredentials();
+    _loginController = TextEditingController();
+    _passwordController = TextEditingController();
+    savedData = EncryptedSharedPreferences();
+    _loadSavedData();
+
   }
 
-  Future<void> _loadCredentials() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? username = prefs.getString('username');
-    String? password = prefs.getString('password');
+  @override
+  void dispose() {
+    _loginController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
-    if (username != null && password != null) {
-      _usernameController.text = username;
-      _passwordController.text = password;
+  void _loadSavedData() async {
+    String? savedLogin = await savedData.getString("login");
+    String? savedPassword = await savedData.getString("password");
+
+    if (savedLogin != null && savedLogin.isNotEmpty && savedPassword != null && savedPassword.isNotEmpty) {
+
       setState(() {
-        _credentialsLoaded = true;
+        _loginController.text = savedLogin;
+        _passwordController.text = savedPassword;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Previous credentials loaded.'),
-          action: SnackBarAction(
-            label: 'Clear Saved Data',
-            onPressed: _clearCredentials,
-          ),
-        ),
+    }
+  }
+
+
+  void _validateAndLogin()  async{
+    String? savedLogin = await savedData.getString("login");
+    String? savedPassword = await savedData.getString("password");
+    if (_loginController.text == savedLogin &&
+        _passwordController.text == savedPassword ) {
+      Navigator.pushNamed(context, '/pageTwo').then((_) {
+        final snackBar = SnackBar(
+          content: Text('Welcome Back, ${_loginController.text}'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
+    else {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertDialog(
+              title: const Text(
+                  'Would you like to save the username and password?'),
+              actions: <Widget>[
+                FilledButton(
+                  onPressed: () {
+                    var userTyped = _loginController.value.text;
+                    var passwordTyped = _passwordController.value.text;
+                    savedData.setString("login", userTyped);
+                    savedData.setString("password", passwordTyped);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("OK"),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    savedData.setString("login", "");
+                    savedData.setString("password", "");
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Cancel"),
+                ),
+              ],
+            ),
       );
     }
   }
 
+
+  void buttonClicked() {
+    if (_loginController.text.isNotEmpty && _passwordController.text.isNotEmpty)
+    { _validateAndLogin();
+      // Navigator.pushNamed(context, '/pageTwo');
+    } else {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertDialog(
+              title: const Text(
+                  'Would you like to save the username and password?'),
+              actions: <Widget>[
+                FilledButton(
+                  onPressed: () {
+                    var userTyped = _loginController.value.text;
+                    var passwordTyped = _passwordController.value.text;
+                    savedData.setString("login", userTyped);
+                    savedData.setString("password", passwordTyped);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("OK"),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    savedData.setString("login", "");
+                    savedData.setString("password", "");
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Cancel"),
+                ),
+              ],
+            ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,43 +178,43 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                hintText: "Username",
-                border: OutlineInputBorder(),
-                labelText: "Login",
-              ),
+            Text(
+              '',
+              style: TextStyle(fontSize: myFontSize, color: Colors.deepPurple),
             ),
-            SizedBox(height: 20),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: "Password",
-                border: OutlineInputBorder(),
-                labelText: "Password",
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _login,
-              child: Container(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.blue,
-                  ),
+            Flexible(
+              child: TextField(
+                controller: _loginController,
+                decoration: const InputDecoration(
+                  hintText: "Login",
+                  border: OutlineInputBorder(),
+                  labelText: "Login",
                 ),
+              ),
+            ),
+            Flexible(
+              child: TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  hintText: "Password",
+                  border: OutlineInputBorder(),
+                  labelText: "Password",
+                ),
+              ),
+            ),
+            const SizedBox(height: 25),
+            ElevatedButton(
+              onPressed: buttonClicked,
+              child: Text(
+                "Login",
+                style: TextStyle(fontSize: myFontSize),
               ),
             ),
           ],
         ),
       ),
     );
+
   }
 }
-
-
