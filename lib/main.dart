@@ -33,7 +33,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> words = [
     'Item 1',
-
   ];
 
   final TextEditingController _inputController = TextEditingController();
