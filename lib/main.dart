@@ -1,6 +1,7 @@
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
-
+import 'database.dart';
+import 'todo.dart';
 import 'secondPage.dart';
 
 void main() {
@@ -9,7 +10,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: '/pageOne',
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -50,26 +49,29 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double _counter = 0.0;
   var myFontSize = 25.0;
-  // var isChecked = false;
-
   late TextEditingController _loginController;
   late TextEditingController _passwordController;
   late EncryptedSharedPreferences savedData;
+  late TextEditingController _todoController;
+
+  List<ToDo> _todos = [];
 
   @override
   void initState() {
     super.initState();
     _loginController = TextEditingController();
     _passwordController = TextEditingController();
+    _todoController = TextEditingController(); // 添加这个初始化
     savedData = EncryptedSharedPreferences();
     _loadSavedData();
-
+    _fetchToDos();
   }
 
   @override
   void dispose() {
     _loginController.dispose();
     _passwordController.dispose();
+    _todoController.dispose();
     super.dispose();
   }
 
@@ -78,7 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
     String? savedPassword = await savedData.getString("password");
 
     if (savedLogin != null && savedLogin.isNotEmpty && savedPassword != null && savedPassword.isNotEmpty) {
-
       setState(() {
         _loginController.text = savedLogin;
         _passwordController.text = savedPassword;
@@ -86,87 +87,102 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
-  void _validateAndLogin()  async{
+  void _validateAndLogin() async {
     String? savedLogin = await savedData.getString("login");
     String? savedPassword = await savedData.getString("password");
-    if (_loginController.text == savedLogin &&
-        _passwordController.text == savedPassword ) {
+    if (_loginController.text == savedLogin && _passwordController.text == savedPassword) {
       Navigator.pushNamed(context, '/pageTwo').then((_) {
         final snackBar = SnackBar(
           content: Text('Welcome Back, ${_loginController.text}'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
-    }
-    else {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) =>
-            AlertDialog(
-              title: const Text(
-                  'Would you like to save the username and password?'),
-              actions: <Widget>[
-                FilledButton(
-                  onPressed: () {
-                    var userTyped = _loginController.value.text;
-                    var passwordTyped = _passwordController.value.text;
-                    savedData.setString("login", userTyped);
-                    savedData.setString("password", passwordTyped);
-                    Navigator.pop(context);
-                  },
-                  child: const Text("OK"),
-                ),
-                FilledButton(
-                  onPressed: () {
-                    savedData.setString("login", "");
-                    savedData.setString("password", "");
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Cancel"),
-                ),
-              ],
-            ),
-      );
-    }
-  }
-
-
-  void buttonClicked() {
-    if (_loginController.text.isNotEmpty && _passwordController.text.isNotEmpty)
-    { _validateAndLogin();
-      // Navigator.pushNamed(context, '/pageTwo');
     } else {
       showDialog<String>(
         context: context,
-        builder: (BuildContext context) =>
-            AlertDialog(
-              title: const Text(
-                  'Would you like to save the username and password?'),
-              actions: <Widget>[
-                FilledButton(
-                  onPressed: () {
-                    var userTyped = _loginController.value.text;
-                    var passwordTyped = _passwordController.value.text;
-                    savedData.setString("login", userTyped);
-                    savedData.setString("password", passwordTyped);
-                    Navigator.pop(context);
-                  },
-                  child: const Text("OK"),
-                ),
-                FilledButton(
-                  onPressed: () {
-                    savedData.setString("login", "");
-                    savedData.setString("password", "");
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Cancel"),
-                ),
-              ],
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Would you like to save the username and password?'),
+          actions: <Widget>[
+            FilledButton(
+              onPressed: () {
+                var userTyped = _loginController.value.text;
+                var passwordTyped = _passwordController.value.text;
+                savedData.setString("login", userTyped);
+                savedData.setString("password", passwordTyped);
+                Navigator.pop(context);
+              },
+              child: const Text("OK"),
             ),
+            FilledButton(
+              onPressed: () {
+                savedData.setString("login", "");
+                savedData.setString("password", "");
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+          ],
+        ),
       );
     }
   }
+
+  void _fetchToDos() async {
+    final todos = await DatabaseHelper.instance.fetchToDos();
+    setState(() {
+      _todos = todos;
+    });
+  }
+
+  void _addToDo() async {
+    if (_todoController.text.isNotEmpty) {
+      final newToDo = ToDo(
+        title: _todoController.text,
+      );
+      await DatabaseHelper.instance.insertToDo(newToDo);
+      _todoController.clear();
+      _fetchToDos();
+    }
+  }
+
+  void _deleteToDo(int id) async {
+    await DatabaseHelper.instance.deleteToDo(id);
+    _fetchToDos();
+  }
+
+  void buttonClicked() {
+    if (_loginController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+      _validateAndLogin();
+    } else {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Would you like to save the username and password?'),
+          actions: <Widget>[
+            FilledButton(
+              onPressed: () {
+                var userTyped = _loginController.value.text;
+                var passwordTyped = _passwordController.value.text;
+                savedData.setString("login", userTyped);
+                savedData.setString("password", passwordTyped);
+                Navigator.pop(context);
+              },
+              child: const Text("OK"),
+            ),
+            FilledButton(
+              onPressed: () {
+                savedData.setString("login", "");
+                savedData.setString("password", "");
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,10 +194,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              '',
-              style: TextStyle(fontSize: myFontSize, color: Colors.deepPurple),
-            ),
             Flexible(
               child: TextField(
                 controller: _loginController,
@@ -211,10 +223,39 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: myFontSize),
               ),
             ),
+            const SizedBox(height: 25),
+            Flexible(
+              child: TextField(
+                controller: _todoController,
+                decoration: const InputDecoration(
+                  hintText: "To-Do Item",
+                  border: OutlineInputBorder(),
+                  labelText: "To-Do Item",
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: _addToDo,
+              child: Text(
+                "Add To-Do",
+                style: TextStyle(fontSize: myFontSize),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _todos.length,
+                itemBuilder: (context, index) {
+                  final todo = _todos[index];
+                  return ListTile(
+                    title: Text(todo.title),
+                    onLongPress: () => _deleteToDo(todo.id!),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
     );
-
   }
 }
