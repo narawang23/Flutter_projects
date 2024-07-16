@@ -34,7 +34,7 @@
 
   <script>
     // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
+    const {{flutter_service_worker_version}} = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
@@ -43,7 +43,7 @@
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
+      _flutter.loader.load({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
@@ -55,5 +55,28 @@
       });
     });
   </script>
+</body>
+</html>
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your App</title>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="description" content="A new Flutter project">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- Add the following line to fix the service worker version warning -->
+  <meta name="flutter_service_worker_version" content="{{flutter_service_worker_version}}">
+  <script>
+    // Replace the deprecated method
+    (function() {
+      var loader = new FlutterLoader();
+      loader.load();
+    })();
+  </script>
+</head>
+<body>
+<script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>

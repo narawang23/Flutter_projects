@@ -1,8 +1,7 @@
-import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'database.dart';
-import 'todo.dart';
-import 'secondPage.dart';
+import 'todo_item.dart';
+import 'todo_dao.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,173 +13,95 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // list all pages
-      routes:{
-        //keys:     //values
-        '/pageOne'  :  (context) => MyHomePage(title: "Flutter Demo Home Page"),
-        '/pageTwo'  :  (context) {
-          return SecondPage();
-        }
-      },
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/pageOne',
+      home: const ToDoPage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class DataRepository{
-  static String loginName="";
-  static String password="";
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class ToDoPage extends StatefulWidget {
+  const ToDoPage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ToDoPage> createState() => _ToDoPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  double _counter = 0.0;
-  var myFontSize = 25.0;
-  late TextEditingController _loginController;
-  late TextEditingController _passwordController;
-  late EncryptedSharedPreferences savedData;
-  late TextEditingController _todoController;
-
-  List<ToDo> _todos = [];
+class _ToDoPageState extends State<ToDoPage> {
+  final TextEditingController _todoController = TextEditingController();
+  late AppDatabase database;
+  late ToDoDao todoDao;
+  List<ToDoItem> _todoItems = [];
 
   @override
   void initState() {
     super.initState();
-    _loginController = TextEditingController();
-    _passwordController = TextEditingController();
-    _todoController = TextEditingController(); // 添加这个初始化
-    savedData = EncryptedSharedPreferences();
-    _loadSavedData();
-    _fetchToDos();
+    _initializeDatabase();
   }
 
-  @override
-  void dispose() {
-    _loginController.dispose();
-    _passwordController.dispose();
-    _todoController.dispose();
-    super.dispose();
+  Future<void> _initializeDatabase() async {
+    database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    todoDao = database.todoDao;
+    print('Database initialized');
+    _loadTodos();
   }
 
-  void _loadSavedData() async {
-    String? savedLogin = await savedData.getString("login");
-    String? savedPassword = await savedData.getString("password");
-
-    if (savedLogin != null && savedLogin.isNotEmpty && savedPassword != null && savedPassword.isNotEmpty) {
-      setState(() {
-        _loginController.text = savedLogin;
-        _passwordController.text = savedPassword;
-      });
-    }
-  }
-
-  void _validateAndLogin() async {
-    String? savedLogin = await savedData.getString("login");
-    String? savedPassword = await savedData.getString("password");
-    if (_loginController.text == savedLogin && _passwordController.text == savedPassword) {
-      Navigator.pushNamed(context, '/pageTwo').then((_) {
-        final snackBar = SnackBar(
-          content: Text('Welcome Back, ${_loginController.text}'),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
-    } else {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Would you like to save the username and password?'),
-          actions: <Widget>[
-            FilledButton(
-              onPressed: () {
-                var userTyped = _loginController.value.text;
-                var passwordTyped = _passwordController.value.text;
-                savedData.setString("login", userTyped);
-                savedData.setString("password", passwordTyped);
-                Navigator.pop(context);
-              },
-              child: const Text("OK"),
-            ),
-            FilledButton(
-              onPressed: () {
-                savedData.setString("login", "");
-                savedData.setString("password", "");
-                Navigator.pop(context);
-              },
-              child: const Text("Cancel"),
-            ),
-          ],
-        ),
-      );
-    }
-  }
-
-  void _fetchToDos() async {
-    final todos = await DatabaseHelper.instance.fetchToDos();
+  Future<void> _loadTodos() async {
+    final todos = await todoDao.findAllToDoItems();
     setState(() {
-      _todos = todos;
+      _todoItems = todos;
     });
+    print('Todos loaded: $_todoItems');
   }
 
-  void _addToDo() async {
+  Future<void> _addTodoItem() async {
     if (_todoController.text.isNotEmpty) {
-      final newToDo = ToDo(
-        title: _todoController.text,
-      );
-      await DatabaseHelper.instance.insertToDo(newToDo);
+      final todo = ToDoItem(task: _todoController.text);
+      await todoDao.insertToDoItem(todo);
+      print('Todo added: $todo');
       _todoController.clear();
-      _fetchToDos();
+      _loadTodos();
+    } else {
+      print('Text field is empty');
     }
   }
 
-  void _deleteToDo(int id) async {
-    await DatabaseHelper.instance.deleteToDo(id);
-    _fetchToDos();
+  Future<void> _removeTodoItem(ToDoItem todo) async {
+    await todoDao.deleteToDoItem(todo);
+    print('Todo removed: $todo');
+    _loadTodos();  // 重新加载待办事项
   }
 
-  void buttonClicked() {
-    if (_loginController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
-      _validateAndLogin();
-    } else {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Would you like to save the username and password?'),
+  Future<void> _showDeleteDialog(ToDoItem todo) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Todo Item'),
+          content: Text('Are you sure you want to delete this item?'),
           actions: <Widget>[
-            FilledButton(
+            TextButton(
               onPressed: () {
-                var userTyped = _loginController.value.text;
-                var passwordTyped = _passwordController.value.text;
-                savedData.setString("login", userTyped);
-                savedData.setString("password", passwordTyped);
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
-              child: const Text("OK"),
+              child: Text('No'),
             ),
-            FilledButton(
+            TextButton(
               onPressed: () {
-                savedData.setString("login", "");
-                savedData.setString("password", "");
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
-              child: const Text("Cancel"),
+              child: Text('Yes'),
             ),
           ],
-        ),
-      );
-    }
+        );
+      },
+    );
   }
 
   @override
@@ -190,65 +111,47 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Flexible(
-              child: TextField(
-                controller: _loginController,
-                decoration: const InputDecoration(
-                  hintText: "Login",
-                  border: OutlineInputBorder(),
-                  labelText: "Login",
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    controller: _todoController,
+                    decoration: InputDecoration(
+                      labelText: 'Enter a todo item',
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Flexible(
-              child: TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  hintText: "Password",
-                  border: OutlineInputBorder(),
-                  labelText: "Password",
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: _addTodoItem,
+                  child: Text('Add'),
                 ),
-              ),
+              ],
             ),
-            const SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: buttonClicked,
-              child: Text(
-                "Login",
-                style: TextStyle(fontSize: myFontSize),
-              ),
-            ),
-            const SizedBox(height: 25),
-            Flexible(
-              child: TextField(
-                controller: _todoController,
-                decoration: const InputDecoration(
-                  hintText: "To-Do Item",
-                  border: OutlineInputBorder(),
-                  labelText: "To-Do Item",
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: _addToDo,
-              child: Text(
-                "Add To-Do",
-                style: TextStyle(fontSize: myFontSize),
-              ),
-            ),
+            SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: _todos.length,
+              child: _todoItems.isEmpty
+                  ? Center(child: Text('There are no items in the list'))
+                  : ListView.builder(
+                itemCount: _todoItems.length,
                 itemBuilder: (context, index) {
-                  final todo = _todos[index];
-                  return ListTile(
-                    title: Text(todo.title),
-                    onLongPress: () => _deleteToDo(todo.id!),
+                  final todo = _todoItems[index];
+                  return GestureDetector(
+                    onLongPress: () => _showDeleteDialog(todo),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('Row number: $index'),
+                          Text(todo.task),
+                        ],
+                      ),
+                    ),
                   );
                 },
               ),

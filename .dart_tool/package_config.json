@@ -51,9 +51,9 @@
     },
     {
       "name": "build_daemon",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/build_daemon-4.0.1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/build_daemon-4.0.2",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.4"
     },
     {
       "name": "build_resolvers",
@@ -63,15 +63,15 @@
     },
     {
       "name": "build_runner",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/build_runner-2.4.9",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/build_runner-2.4.11",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.4"
     },
     {
       "name": "build_runner_core",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/build_runner_core-7.3.0",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/build_runner_core-7.3.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.4"
     },
     {
       "name": "built_collection",
@@ -147,7 +147,7 @@
     },
     {
       "name": "dev_build",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/dev_build-1.0.0+1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/dev_build-1.0.0+3",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -213,9 +213,9 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/wangyanan/Downloads/flutter/packages/flutter",
+      "rootUri": "file:///Users/wangyanan/development/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.3"
     },
     {
       "name": "flutter_lints",
@@ -225,13 +225,13 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/wangyanan/Downloads/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/wangyanan/development/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.3"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/wangyanan/Downloads/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/wangyanan/development/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -255,7 +255,7 @@
     },
     {
       "name": "http",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/http-1.2.1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/http-1.2.2",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -291,21 +291,21 @@
     },
     {
       "name": "leak_tracker",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/leak_tracker-10.0.0",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/leak_tracker-10.0.4",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "3.2"
     },
     {
       "name": "leak_tracker_flutter_testing",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-2.0.1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.3",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "3.2"
     },
     {
       "name": "leak_tracker_testing",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/leak_tracker_testing-2.0.1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.1",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "3.2"
     },
     {
       "name": "lints",
@@ -339,7 +339,7 @@
     },
     {
       "name": "meta",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/meta-1.11.0",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/meta-1.12.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -429,9 +429,9 @@
     },
     {
       "name": "shared_preferences_android",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/shared_preferences_android-2.2.2",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/shared_preferences_android-2.2.3",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.4"
     },
     {
       "name": "shared_preferences_foundation",
@@ -471,13 +471,13 @@
     },
     {
       "name": "shelf_web_socket",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/shelf_web_socket-1.0.4",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/shelf_web_socket-2.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/wangyanan/Downloads/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/wangyanan/development/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -519,9 +519,9 @@
     },
     {
       "name": "sqlite3",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/sqlite3-2.4.3",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/sqlite3-2.4.4",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.4"
     },
     {
       "name": "sqlparser",
@@ -573,7 +573,7 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/test_api-0.6.1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/test_api-0.7.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -603,13 +603,13 @@
     },
     {
       "name": "url_launcher_android",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.2",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.3",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.4"
     },
     {
       "name": "url_launcher_ios",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.0",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.1",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -651,9 +651,9 @@
     },
     {
       "name": "vm_service",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/vm_service-13.0.0",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/vm_service-14.2.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.3"
     },
     {
       "name": "watcher",
@@ -668,8 +668,14 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "web_socket",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/web_socket-0.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "web_socket_channel",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/web_socket_channel-2.4.5",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/web_socket_channel-3.0.1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -692,7 +698,10 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-07-09T23:04:21.960331Z",
+  "generated": "2024-07-16T21:07:36.345579Z",
   "generator": "pub",
-  "generatorVersion": "3.3.4"
+  "generatorVersion": "3.4.3",
+  "flutterRoot": "file:///Users/wangyanan/development/flutter",
+  "flutterVersion": "3.22.2",
+  "pubCache": "file:///Users/wangyanan/.pub-cache"
 }

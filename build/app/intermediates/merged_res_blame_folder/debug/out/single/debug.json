@@ -22,9 +22,5 @@
     {
         "merged": "com.example.cst2335_summer24.app-merged_res-13:/mipmap-hdpi_ic_launcher.png.flat",
         "source": "com.example.cst2335_summer24.app-main-7:/mipmap-hdpi/ic_launcher.png"
-    },
-    {
-        "merged": "com.example.cst2335_summer24.app-merged_res-13:/drawable_launch_background.xml.flat",
-        "source": "com.example.cst2335_summer24.app-main-7:/drawable/launch_background.xml"
     }
 ]
