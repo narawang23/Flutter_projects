@@ -1,20 +1,13 @@
 import 'package:floor/floor.dart';
 
 @entity
-class ToDoItem {
+class todo_item{
+
   @PrimaryKey(autoGenerate: true)
   final int? id;
-  final String task;
-  ToDoItem({this.id, required this.task});
+  final String itemName;
+  //final String dateCreated;
+
+  todo_item(this.id, this.itemName);
 }
 
-// import 'package:floor/floor.dart';
-//
-// @entity
-// class ToDoItem {
-//   @PrimaryKey(autoGenerate: true)
-//   final int? id;
-//   final String task;
-//
-//   ToDoItem({this.id, required this.task});
-// }

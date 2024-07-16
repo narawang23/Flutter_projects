@@ -1,29 +1,24 @@
+
+
 import 'package:floor/floor.dart';
 import 'todo_item.dart';
 
-@dao
-abstract class ToDoDao {
+@dao// Floor to generate the bodies
+abstract class todo_dao {// NO function bodies
+
   @Query('SELECT * FROM ToDoItem')
-  Future<List<ToDoItem>> findAllToDoItems();
+  Future<List<todo_item>>  findAllTodos();
 
-  @insert
-  Future<void> insertToDoItem(ToDoItem todo);
+  @insert // make it an insert function to generate
+  Future<int> insertItem(todo_item todo);
 
-  @delete
-  Future<void> deleteToDoItem(ToDoItem todo);
+  @delete  // generate the deletion statement in code
+  Future<void> deleteItem(todo_item todo);
+
+  // @query ('sql query')
+
+  @update
+  Future<void> updateItem(todo_item item);
+
+
 }
-
-// import 'package:floor/floor.dart';
-// import 'todo_item.dart';
-//
-// @dao
-// abstract class ToDoDao {
-//   @Query('SELECT * FROM ToDoItem')
-//   Future<List<ToDoItem>> findAllToDoItems();
-//
-//   @insert
-//   Future<void> insertToDoItem(ToDoItem todo);
-//
-//   @delete
-//   Future<void> deleteToDoItem(ToDoItem todo);
-// }
