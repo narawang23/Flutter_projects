@@ -6,33 +6,33 @@ part of 'todo_database.dart';
 // FloorGenerator
 // **************************************************************************
 
-abstract class $todo_databaseBuilderContract {
+abstract class $TodoDatabaseBuilderContract {
   /// Adds migrations to the builder.
-  $todo_databaseBuilderContract addMigrations(List<Migration> migrations);
+  $TodoDatabaseBuilderContract addMigrations(List<Migration> migrations);
 
   /// Adds a database [Callback] to the builder.
-  $todo_databaseBuilderContract addCallback(Callback callback);
+  $TodoDatabaseBuilderContract addCallback(Callback callback);
 
   /// Creates the database and initializes it.
-  Future<todo_database> build();
+  Future<TodoDatabase> build();
 }
 
 // ignore: avoid_classes_with_only_static_members
-class $Floortodo_database {
+class $FloorTodoDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static $todo_databaseBuilderContract databaseBuilder(String name) =>
-      _$todo_databaseBuilder(name);
+  static $TodoDatabaseBuilderContract databaseBuilder(String name) =>
+      _$TodoDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  static $todo_databaseBuilderContract inMemoryDatabaseBuilder() =>
-      _$todo_databaseBuilder(null);
+  static $TodoDatabaseBuilderContract inMemoryDatabaseBuilder() =>
+      _$TodoDatabaseBuilder(null);
 }
 
-class _$todo_databaseBuilder implements $todo_databaseBuilderContract {
-  _$todo_databaseBuilder(this.name);
+class _$TodoDatabaseBuilder implements $TodoDatabaseBuilderContract {
+  _$TodoDatabaseBuilder(this.name);
 
   final String? name;
 
@@ -41,23 +41,23 @@ class _$todo_databaseBuilder implements $todo_databaseBuilderContract {
   Callback? _callback;
 
   @override
-  $todo_databaseBuilderContract addMigrations(List<Migration> migrations) {
+  $TodoDatabaseBuilderContract addMigrations(List<Migration> migrations) {
     _migrations.addAll(migrations);
     return this;
   }
 
   @override
-  $todo_databaseBuilderContract addCallback(Callback callback) {
+  $TodoDatabaseBuilderContract addCallback(Callback callback) {
     _callback = callback;
     return this;
   }
 
   @override
-  Future<todo_database> build() async {
+  Future<TodoDatabase> build() async {
     final path = name != null
         ? await sqfliteDatabaseFactory.getDatabasePath(name!)
         : ':memory:';
-    final database = _$todo_database();
+    final database = _$TodoDatabase();
     database.database = await database.open(
       path,
       _migrations,
@@ -67,12 +67,12 @@ class _$todo_databaseBuilder implements $todo_databaseBuilderContract {
   }
 }
 
-class _$todo_database extends todo_database {
-  _$todo_database([StreamController<String>? listener]) {
+class _$TodoDatabase extends TodoDatabase {
+  _$TodoDatabase([StreamController<String>? listener]) {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  todo_dao? _todoDaoInstance;
+  TodoDao? _todoDaoInstance;
 
   Future<sqflite.Database> open(
     String path,
@@ -105,32 +105,32 @@ class _$todo_database extends todo_database {
   }
 
   @override
-  todo_dao get todoDao {
-    return _todoDaoInstance ??= _$todo_dao(database, changeListener);
+  TodoDao get todoDao {
+    return _todoDaoInstance ??= _$TodoDao(database, changeListener);
   }
 }
 
-class _$todo_dao extends todo_dao {
-  _$todo_dao(
+class _$TodoDao extends TodoDao {
+  _$TodoDao(
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _todo_itemInsertionAdapter = InsertionAdapter(
+        _todoItemInsertionAdapter = InsertionAdapter(
             database,
             'todo_item',
-            (todo_item item) =>
+            (TodoItem item) =>
                 <String, Object?>{'id': item.id, 'itemName': item.itemName}),
-        _todo_itemUpdateAdapter = UpdateAdapter(
+        _todoItemUpdateAdapter = UpdateAdapter(
             database,
             'todo_item',
             ['id'],
-            (todo_item item) =>
+            (TodoItem item) =>
                 <String, Object?>{'id': item.id, 'itemName': item.itemName}),
-        _todo_itemDeletionAdapter = DeletionAdapter(
+        _todoItemDeletionAdapter = DeletionAdapter(
             database,
             'todo_item',
             ['id'],
-            (todo_item item) =>
+            (TodoItem item) =>
                 <String, Object?>{'id': item.id, 'itemName': item.itemName});
 
   final sqflite.DatabaseExecutor database;
@@ -139,32 +139,32 @@ class _$todo_dao extends todo_dao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<todo_item> _todo_itemInsertionAdapter;
+  final InsertionAdapter<TodoItem> _todoItemInsertionAdapter;
 
-  final UpdateAdapter<todo_item> _todo_itemUpdateAdapter;
+  final UpdateAdapter<TodoItem> _todoItemUpdateAdapter;
 
-  final DeletionAdapter<todo_item> _todo_itemDeletionAdapter;
+  final DeletionAdapter<TodoItem> _todoItemDeletionAdapter;
 
   @override
-  Future<List<todo_item>> findAllTodos() async {
-    return _queryAdapter.queryList('SELECT * FROM ToDoItem',
+  Future<List<TodoItem>> findAllTodos() async {
+    return _queryAdapter.queryList('SELECT * FROM todo_item',
         mapper: (Map<String, Object?> row) =>
-            todo_item(row['id'] as int?, row['itemName'] as String));
+            TodoItem(row['id'] as int?, row['itemName'] as String));
   }
 
   @override
-  Future<int> insertItem(todo_item todo) {
-    return _todo_itemInsertionAdapter.insertAndReturnId(
-        todo, OnConflictStrategy.abort);
+  Future<int> insertItem(TodoItem item) {
+    return _todoItemInsertionAdapter.insertAndReturnId(
+        item, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updateItem(todo_item item) async {
-    await _todo_itemUpdateAdapter.update(item, OnConflictStrategy.abort);
+  Future<void> updateItem(TodoItem item) async {
+    await _todoItemUpdateAdapter.update(item, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> deleteItem(todo_item todo) async {
-    await _todo_itemDeletionAdapter.delete(todo);
+  Future<void> deleteItem(TodoItem item) async {
+    await _todoItemDeletionAdapter.delete(item);
   }
 }

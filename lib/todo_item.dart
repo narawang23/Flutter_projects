@@ -1,13 +1,10 @@
 import 'package:floor/floor.dart';
 
-@entity
-class todo_item{
-
+@Entity(tableName: 'todo_item')
+class TodoItem {
   @PrimaryKey(autoGenerate: true)
   final int? id;
   final String itemName;
-  //final String dateCreated;
 
-  todo_item(this.id, this.itemName);
+  TodoItem(this.id, this.itemName);
 }
-

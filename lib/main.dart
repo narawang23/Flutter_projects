@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'todo_database.dart';
 import 'todo_item.dart';
 import 'todo_dao.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
@@ -35,9 +36,9 @@ class ToDoPage extends StatefulWidget {
 
 class _ToDoPageState extends State<ToDoPage> {
   final TextEditingController _todoController = TextEditingController();
-  late todo_database database;
-  late todo_dao todoDao;
-  List<todo_item> _todoItems = [];
+  late TodoDatabase database;
+  late TodoDao todoDao;
+  List<TodoItem> _todoItems = [];
 
   @override
   void initState() {
@@ -46,7 +47,9 @@ class _ToDoPageState extends State<ToDoPage> {
   }
 
   Future<void> _initializeDatabase() async {
-    database = await $Floortodo_database.databaseBuilder('app_database.db').build();
+    // Build the database
+    database = await $FloorTodoDatabase.databaseBuilder('app_database.db').build();
+    // Access the TodoDao
     todoDao = database.todoDao;
     print('Database initialized');
     _loadTodos();
@@ -62,7 +65,7 @@ class _ToDoPageState extends State<ToDoPage> {
 
   Future<void> _addTodoItem() async {
     if (_todoController.text.isNotEmpty) {
-      final todo = todo_item(null, _todoController.text); // Do not set the id
+      final todo = TodoItem(null, _todoController.text); // Do not set the id
       await todoDao.insertItem(todo);
       print('Todo added: $todo');
       _todoController.clear();
@@ -72,32 +75,32 @@ class _ToDoPageState extends State<ToDoPage> {
     }
   }
 
-  Future<void> _removeTodoItem(todo_item todo) async {
+  Future<void> _removeTodoItem(TodoItem todo) async {
     await todoDao.deleteItem(todo);
     print('Todo removed: $todo');
     _loadTodos();
   }
 
-  Future<void> _showDeleteDialog(todo_item todo) async {
+  Future<void> _showDeleteDialog(BuildContext context, TodoItem todo) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Todo Item'),
-          content: Text('Are you sure you want to delete this item?'),
+          title: const Text('Delete Todo Item'),
+          content: const Text('Are you sure you want to delete this item?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () {
                 _removeTodoItem(todo);
                 Navigator.of(context).pop();
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
           ],
         );
@@ -121,28 +124,28 @@ class _ToDoPageState extends State<ToDoPage> {
                 Expanded(
                   child: TextField(
                     controller: _todoController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Enter a todo item',
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: _addTodoItem,
-                  child: Text('Add'),
+                  child: const Text('Add'),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: _todoItems.isEmpty
-                  ? Center(child: Text('There are no items in the list'))
+                  ? const Center(child: Text('There are no items in the list'))
                   : ListView.builder(
                 itemCount: _todoItems.length,
                 itemBuilder: (context, index) {
                   final todo = _todoItems[index];
                   return GestureDetector(
-                    onLongPress: () => _showDeleteDialog(todo),
+                    onLongPress: () => _showDeleteDialog(context, todo),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Row(
