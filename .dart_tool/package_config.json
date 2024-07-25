@@ -147,9 +147,9 @@
     },
     {
       "name": "dev_build",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/dev_build-1.0.0+3",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/dev_build-1.0.0+8",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.4"
     },
     {
       "name": "encrypt",
@@ -249,9 +249,9 @@
     },
     {
       "name": "graphs",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/graphs-2.3.1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/graphs-2.3.2",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.4"
     },
     {
       "name": "http",
@@ -405,9 +405,9 @@
     },
     {
       "name": "process_run",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/process_run-1.0.0+1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/process_run-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.4"
     },
     {
       "name": "pub_semver",
@@ -447,9 +447,9 @@
     },
     {
       "name": "shared_preferences_platform_interface",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/shared_preferences_platform_interface-2.3.2",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/shared_preferences_platform_interface-2.4.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "shared_preferences_web",
@@ -513,9 +513,9 @@
     },
     {
       "name": "sqflite_common_ffi_web",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/sqflite_common_ffi_web-0.4.3+1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/sqflite_common_ffi_web-0.4.3+2",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.4"
     },
     {
       "name": "sqlite3",
@@ -603,7 +603,7 @@
     },
     {
       "name": "url_launcher_android",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.3",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.5",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -639,9 +639,9 @@
     },
     {
       "name": "url_launcher_windows",
-      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.1",
+      "rootUri": "file:///Users/wangyanan/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.2",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "vector_math",
@@ -698,7 +698,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-07-17T03:35:10.844862Z",
+  "generated": "2024-07-25T16:41:11.719545Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///Users/wangyanan/development/flutter",
