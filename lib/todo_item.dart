@@ -6,5 +6,5 @@ class TodoItem {
   final int? id;
   final String itemName;
 
-  TodoItem(this.id, this.itemName);
+  TodoItem(this.id, this.itemName, {required id});
 }
