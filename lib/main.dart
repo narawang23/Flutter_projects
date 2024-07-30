@@ -63,7 +63,9 @@ class _TodoPageState extends State<TodoPage> {
 
   Future<void> _addTodoItem() async {
     if (_todoController.text.isNotEmpty) {
-      final todo = TodoItem(id: null, itemName: _todoController.text); // Do not set the id
+      // final todo = TodoItem(id: null, itemName: _todoController.text);
+      final todo = TodoItem(itemName: _todoController.text);
+// Do not set the id
       await todoDao.insertItem(todo);
       print('Todo added: $todo');
       _todoController.clear();

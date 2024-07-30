@@ -698,10 +698,10 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-07-17T03:35:10.844862Z",
+  "generated": "2024-07-30T21:25:47.170770Z",
   "generator": "pub",
-  "generatorVersion": "3.4.3",
+  "generatorVersion": "3.4.4",
   "flutterRoot": "file:///Users/wangyanan/development/flutter",
-  "flutterVersion": "3.22.2",
+  "flutterVersion": "3.22.3",
   "pubCache": "file:///Users/wangyanan/.pub-cache"
 }
